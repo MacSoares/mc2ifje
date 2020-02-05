@@ -4,7 +4,6 @@ class CloudBalancerConfigReader:
         self.ttask = 0
         self.umax = 0
         self.tasks = []
-        self.cost = 0
         self.global_low_limit = 1
         self.global_high_limit = 10
     
@@ -31,7 +30,7 @@ class CloudBalancerConfigReader:
         if self.global_low_limit <= max_users <= self.global_high_limit:
             self.umax = max_users
         else:
-            raise ValueError()
+            return 0
 
     def get_ttask(self):
         return self.ttask
