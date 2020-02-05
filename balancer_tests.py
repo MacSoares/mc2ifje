@@ -30,13 +30,13 @@ class TestBalancerConfig:
     def test_set_wrong_from_up_umax(self):
         balancer_conf = CloudBalancerConfigReader("test.txt")
         users = 11
-        balancer_conf.set_ttask(users)
+        balancer_conf.set_umax(users)
         assert balancer_conf.umax == 0
 
     def test_set_wrong_from_down_umax(self):
         balancer_conf = CloudBalancerConfigReader("test.txt")
         users = 0
-        balancer_conf.set_ttask(users)
+        balancer_conf.set_umax(users)
         assert balancer_conf.umax == 0
 
     def test_problem_mounter_ok(self):
