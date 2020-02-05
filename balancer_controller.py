@@ -2,16 +2,16 @@ from balancer_config import CloudBalancerConfigReader
 
 class CloudBalancerController:
 
-    def __init__(self):
-        self.servers = []
+    def __init__(self, file_name):
         self.cost = 0
         self.ticks = 0
+        self.tick_count = 0
         self.users = []
         self.user_on_server = { "servers_online":0 , "users_count":0}
-        self.config = CloudBalancerConfigReader("input.txt")
+        self.config = CloudBalancerConfigReader(file_name)
 
     def get_ticks_number(self):
-        total_tasks = self.config.get_tasks
+        total_tasks = self.config.get_tasks()
         self.ticks = len(total_tasks)
         return self.ticks
 
@@ -19,9 +19,12 @@ class CloudBalancerController:
 
         if add:
             for add in range(user):
-                self.users.append(user)
+                self.users.append(1)
         if delete:
-            self.users.pop()
+            if len(self.users) != 0:
+                self.users.pop()
+            else:
+                self.tick_count = 0
         
         total_users = len(self.users)
         self.user_on_server["users_count"] = total_users
@@ -35,29 +38,25 @@ class CloudBalancerController:
     def add_user(self, quantity):
         add = True
         delete = False
-        for user in range(quantity)
-            self.manage_users_pill(user,add, delete)
+        for user in range(quantity):
+            self.manage_users_and_server_pill(user,add, delete)
 
-    def get_ticks_for_task(self):
+    def pop_user(self):
+        self.manage_users_and_server_pill(None,False,True)
 
-    def alocate_user_to_server(self):
-
-    def manage_users_on_servers(self):
-
-    def update_cost(self):
-
-    
-    def generate_uptput(self):
-        tick_count = 1
+    def generate_output(self):
+        self.config.problem_mounter()
         iterable = 0
         ttask = self.config.ttask
-        while tick_count != 0:
-            self.add_user(self.config.tasks[iterable])
+        while self.tick_count != 0:
+            if iterable < len(self.config.tasks):
+                self.add_user(self.config.tasks[iterable])
             if tick_count % ttask == 0:
                 self.pop_user()
-                
+           
+            tick_count +=1
+            iterable +=1  
 
-
-    def write_output_file(self):
-
-    
+if __name__ == "__main__":
+    balancer = CloudBalancerController("input.txt")
+    balancer.generate_output()
